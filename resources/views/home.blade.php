@@ -20,7 +20,6 @@
             </div>
 
 
-
     @php
         $animes = [
             [
@@ -42,8 +41,8 @@
     @endphp
 
     @foreach ($animes as $anime)
-        <div class="col-md-4"> <!-- Each card takes up 4 columns -->
-            <div class="card mb-4"> <!-- Added mb-4 for spacing between rows -->
+        <div class="col-md-4"> 
+            <div class="card mb-4"> 
                 <img src="{{ $anime['image'] }}" class="card-img-top" alt="{{ $anime['title'] }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ $anime['title'] }}</h5>
@@ -56,7 +55,7 @@
 
 @endsection
 
-@section('content-news')
+@section('contentNews')
 
 <div class="container my-5">
     <h1 class="text-center mb-4">Latest News</h1>

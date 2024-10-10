@@ -18,7 +18,6 @@
 
         <div class="canvas-container d-flex justify-content-center align-items-center">
             <div id="canvas">
-                <!-- Here the show will play -->
                 <video width="1036" height="578" controls>
                     <source  type="video/mp4"> <!-- https://e9.animeheaven.me/video.mp4?16d4940da72e912ecef5b9e18f9af2d1 -->
                     Your browser does not support the video tag.
