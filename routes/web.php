@@ -13,6 +13,9 @@ Route::get('/contact', [AnimeController::class, 'contact'])->name('contact');
 
 Route::get('/search', [AnimeController::class, 'search'])->name('search');
 
+//for now
+Route::get('/anime', [AnimeController::class, 'animePage'])->name('animePage');
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 

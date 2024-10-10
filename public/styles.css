@@ -1,0 +1,33 @@
+body {
+    background-color: #f5f5f5;
+
+}
+.navbar {
+    background-color: #343a40;
+}
+.navbar-brand {
+    color: #fff !important;
+}
+.card {
+    margin-top: 20px;
+}
+#canvas {
+    width: 1036px;
+    height: 578px;
+    background-color: #000; 
+}
+.episode-list {
+    width: 20%; 
+}
+
+
+.about-section {
+    padding-left: 10px;
+    width: 20%; 
+}
+.content {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+}
+

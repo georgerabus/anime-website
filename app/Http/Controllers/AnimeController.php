@@ -34,4 +34,8 @@ class AnimeController extends Controller
             // 'results' => $results,
         ]);
     }
+
+    public function animePage(){
+        return view('pages.anime-page');
+    }
 }
