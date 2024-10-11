@@ -16,13 +16,18 @@
                         @csrf
 
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" id="name" required autofocus>
+                            <label for="name" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" required autofocus>
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
                             <input type="email" name="email" class="form-control" id="email" required>
+                            @if($errors->has('email'))
+                                <span class="text-danger">
+                                    {{$errors->first('email')}}
+                                </span>
+                            @endif
                         </div>
 
                         <div class="mb-3">

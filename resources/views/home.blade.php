@@ -4,7 +4,19 @@
 
 @section('content')
 
+
     <div style="margin-top:100px; margin-bottom:100px">
+        @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{session()->get('success')}}
+            </div>
+        @endif
+        @if(session()->has('error'))
+        <div class="alert alert-error">
+            {{session()->get('error')}}
+        </div>
+        @endif
+
         <div class="jumbotron text-center">
             <h1>Welcome to Anime Website</h1>
             <p>Explore the world of anime. Watch your favorites and discover new series!</p>
