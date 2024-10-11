@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class LoginController
+class AuthController
 {
     public function showLoginForm()
     {
@@ -16,6 +16,15 @@ class LoginController
     }
 
     public function logout(Request $request){
+        //todo
+    }
+
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request){
         //todo
     }
 }
