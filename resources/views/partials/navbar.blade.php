@@ -25,6 +25,9 @@
                 @endif
                 @if(Auth::user())
                 <li class="nav-item">
+                    <a class="nav-link" href="{{route('user-profile')}}">Edit Profile</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#" 
                        onclick="event.preventDefault(); document.getElementById('submit-form').submit();">Log out</a>
                 </li>
@@ -32,7 +35,6 @@
                 <form id="submit-form" action="/logout" method="POST" style="display: none;">
                     @csrf
                 </form>
-                
                 @endif
             </ul>
         </div>

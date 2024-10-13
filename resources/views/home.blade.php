@@ -7,12 +7,12 @@
 
     <div style="margin-top:100px; margin-bottom:100px">
         @if(session()->has('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success" x-data="{show:true}" x-init="setTimeout(() => show = false, 3000)" x-show="show" >
                 {{session()->get('success')}}
             </div>
         @endif
         @if(session()->has('error'))
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" x-data="{show:true}" x-init="setTimeout(() => show = false, 3000)" x-show="show" >
             {{session()->get('error')}}
         </div>
         @endif

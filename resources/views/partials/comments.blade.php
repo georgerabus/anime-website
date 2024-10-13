@@ -5,7 +5,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">Leave a Comment</h5>
-                <form action="" method="POST"> {{-- {{ route('comments.store') }} --}}
+                <form action="{{ route('comments-store') }}" method="POST"> 
                     @csrf
                     <div class="form-group">
                         <textarea class="form-control" name="comment" rows="3" placeholder="Write your comment here..." required></textarea>
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="comment-list">
+        {{-- <div class="comment-list">
             <div class="media mb-4">
                 <img class="mr-3 rounded-circle" src="https://via.placeholder.com/50" alt="User image">
                 <div class="media-body">
@@ -25,7 +25,7 @@
                     <div class="reply-form mt-2">
                         <a href="javascript:void(0);" class="text-primary" onclick="toggleReplyForm(this)">Reply</a>
                         <form action="" method="POST" class="mt-2" style="display: none;"> {{-- {{ route('comments.reply', ['id' => 1]) }} --}}
-                            @csrf
+                            {{-- @csrf
                             <div class="form-group">
                                 <textarea class="form-control" name="reply" rows="2" placeholder="Write a reply..." required></textarea>
                             </div>
@@ -41,9 +41,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- loop -->
+            </div> --}} 
 
         </div>
     </div>
