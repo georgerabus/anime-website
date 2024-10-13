@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id(); // Unsigned BIGINT by default
             $table->integer('parent_id')->nullable(); // Optional: if NULL is needed, use nullable()
-            $table->longText('text');
+            $table->string('text', 500);
             $table->foreignId('user_id')->constrained(
                 table: 'users', indexName: 'posts_user_id'
             );

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -36,6 +37,7 @@ class AnimeController extends Controller
     }
 
     public function animePage(){
-        return view('pages.anime-page');
+        $comments = Comment::with('user')->latest()->get();
+        return view('pages.anime-page', ['comments' => $comments]);
     }
 }

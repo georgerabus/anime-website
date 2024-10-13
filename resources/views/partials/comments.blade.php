@@ -15,35 +15,29 @@
             </div>
         </div>
 
-        {{-- <div class="comment-list">
-            <div class="media mb-4">
-                <img class="mr-3 rounded-circle" src="https://via.placeholder.com/50" alt="User image">
-                <div class="media-body">
-                    <h5 class="mt-0">User Name <small class="text-muted">3 hours ago</small></h5>
-                    This is a sample comment.
-
-                    <div class="reply-form mt-2">
-                        <a href="javascript:void(0);" class="text-primary" onclick="toggleReplyForm(this)">Reply</a>
-                        <form action="" method="POST" class="mt-2" style="display: none;"> {{-- {{ route('comments.reply', ['id' => 1]) }} --}}
-                            {{-- @csrf
-                            <div class="form-group">
-                                <textarea class="form-control" name="reply" rows="2" placeholder="Write a reply..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-sm btn-outline-primary">Submit Reply</button>
-                        </form>
-                    </div>
-
-                    <div class="media mt-4">
-                        <img class="mr-3 rounded-circle" src="https://via.placeholder.com/50" alt="User image">
-                        <div class="media-body">
-                            <h6 class="mt-0">Another User <small class="text-muted">1 hour ago</small></h6>
-                            This is a reply to the above comment.
+        <div class="comment-list">
+            @foreach ($comments as $comment)
+                <div class="media mb-4">
+                    <img class="mr-3 rounded-circle" src="https://via.placeholder.com/50" alt="User image">
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ $comment->user->name }} <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small></h5>
+                        {{ $comment->text }}
+        
+                        <div class="reply-form mt-2">
+                            <a href="javascript:void(0);" class="text-primary" onclick="toggleReplyForm(this)">Reply</a>
+                            {{-- <form action="{{ route('comments.reply', ['id' => $comment->id]) }}" method="POST" class="mt-2" style="display: none;">
+                                @csrf
+                                <div class="form-group">
+                                    <textarea class="form-control" name="reply" rows="2" placeholder="Write a reply..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-outline-primary">Submit Reply</button>
+                            </form> --}}
                         </div>
                     </div>
                 </div>
-            </div> --}} 
-
+            @endforeach
         </div>
+        
     </div>
 </div>
 {{-- <script>
