@@ -16,7 +16,8 @@ Route::get('/search', [AnimeController::class, 'search'])->name('search');
 Route::get('/anime', [AnimeController::class, 'animePage'])->name('animePage');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register'])->middleware('guest');

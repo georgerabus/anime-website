@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\QueryException;
 
 class AuthController
 {
@@ -27,8 +28,9 @@ class AuthController
     }
 
     public function logout(Request $request){
-        //todo
-    }
+        Auth::logout();
+        return redirect(route('home'))->with('success', 'Logged out successfully');
+    }       
 
     public function showRegistrationForm()
     {
@@ -47,10 +49,15 @@ class AuthController
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
 
-        if($user->save()){
-            return redirect(route('home'))->with("success", "User created successfully!");
+        try {
+            if ($user->save()) {
+                Auth::login($user);
+                return redirect(route('home'))->with("success", "User created successfully!");
+            }
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] == 1062) { 
+                return redirect(route('home'))->with('error', 'The email or username has already been taken.');
+            }
         }
-        return redirect(route('register'))->with("error", "Failed to create user.");
-
-    }
+}
 }

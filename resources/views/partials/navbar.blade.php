@@ -15,17 +15,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('contact')}}">Contact</a>
                 </li>
+                @if(!Auth::user())
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('register')}}">Register</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('login')}}">Log in</a>
                 </li>
-
+                @endif
+                @if(Auth::user())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{}}">Log out</a> <!-- add later -->
+                    <a class="nav-link" href="#" 
+                       onclick="event.preventDefault(); document.getElementById('submit-form').submit();">Log out</a>
                 </li>
-
+                
+                <form id="submit-form" action="/logout" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                
+                @endif
             </ul>
         </div>
     </div>
