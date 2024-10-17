@@ -13,6 +13,16 @@ class AnimeController extends Controller
         return view('home');
     }
 
+    public function animePage(){
+        $comments = Comment::with(['user', 'replies.user'])->withCount('replies')->whereNull('parent_id')->latest()->get();
+
+        $totalCommentsCount = $comments->reduce(function ($count, $comment) {
+            return $count + 1 + $comment->getTotalRepliesCount();
+        }, 0);
+        
+        return view('pages.anime-page', ['comments' => $comments, 'totalCommentsCount' => $totalCommentsCount]);
+    }
+
     public function animeList()
     {
         return view('pages.anime-list');
@@ -36,8 +46,4 @@ class AnimeController extends Controller
         ]);
     }
 
-    public function animePage(){
-        $comments = Comment::with(['user', 'replies.user'])->whereNull('parent_id')->latest()->get();
-        return view('pages.anime-page', ['comments' => $comments]);
-    }
 }

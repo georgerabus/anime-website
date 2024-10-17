@@ -23,5 +23,11 @@ class Comment extends Model
     {
         return $this->belongsTo(Comment::class, 'parent_id');
     }
-
+    
+    public function getTotalRepliesCount()
+    {
+        return $this->replies->reduce(function ($count, $reply) {
+            return $count + 1 + $reply->getTotalRepliesCount();
+        }, 0);
+    }
 }

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="comments-section mt-5">
-        <h3 class="mb-4">Comments ({{ $comments->count() }})</h3>
+        <h3 class="mb-4">Comments ({{ $totalCommentsCount}})</h3>
 
         <div class="card mb-4">
             <div class="card-body">
