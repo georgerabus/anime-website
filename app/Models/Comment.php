@@ -2,15 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['text', 'user_id'];
+    protected $fillable = ['text', 'user_id', 'parent_id'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    // Define the relationship for replies
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
 }

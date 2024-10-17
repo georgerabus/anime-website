@@ -31,3 +31,22 @@ body {
     height: 100vh;
 }
 
+.comment {
+    border: 1px solid #ddd; /* Optional: Add a border to each comment */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.replies {
+    margin-left: 20px; /* Indentation for replies */
+    border-left: 2px solid #ccc; /* Optional: A left border for visual separation */
+    padding-left: 10px; /* Padding to create space from the border */
+}
+
+.reply-form {
+    margin-top: 10px; /* Space above reply form */
+}
+
+.comment-text {
+    margin-bottom: 5px; /* Space between text and reply form */
+}

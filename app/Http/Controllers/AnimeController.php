@@ -37,7 +37,7 @@ class AnimeController extends Controller
     }
 
     public function animePage(){
-        $comments = Comment::with('user')->latest()->get();
+        $comments = Comment::with(['user', 'replies.user'])->whereNull('parent_id')->latest()->get();
         return view('pages.anime-page', ['comments' => $comments]);
     }
 }

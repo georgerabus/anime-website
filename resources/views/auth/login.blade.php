@@ -30,6 +30,9 @@
                             {{-- <div class="mt-3 text-center">
                                 <a href="{{ route('password.request') }}">Forgot Your Password?</a>
                             </div> --}}
+                            <div class="mt-3 text-center">
+                                <a href="{{ route('register') }}">Don't have an account? Register</a>
+                            </div>
                         </form>
                     </div>
                 </div>
