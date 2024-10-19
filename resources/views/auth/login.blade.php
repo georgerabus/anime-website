@@ -15,10 +15,16 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
                                 <input type="email" name="email" class="form-control" id="email" required autofocus>
+                            </div> --}}
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Username</label>
+                                <input type="text" name="username" class="form-control" id="username" required autofocus>
                             </div>
+    
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>

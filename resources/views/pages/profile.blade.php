@@ -55,9 +55,18 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
+            <div class="mt-3">
+                @if (auth()->user()->photo)
+                    <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Profile Picture" class="img-fluid" style="max-width: 150px;">
+                @else
+                    <img src="{{ asset('default_photo.jpeg') }}" alt="Default Profile Picture" class="img-fluid" style="max-width: 150px;">
+                @endif
+            </div>
 
             <button type="submit" class="btn btn-primary mt-4">Update Profile</button>
         </form>
     </div>
 </div>
+
+
 @endsection

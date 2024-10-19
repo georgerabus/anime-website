@@ -38,6 +38,14 @@ class AuthController
     }
 
     public function register(Request $request){
+
+        // Doesnt work for some reason
+        // $request->validate([
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255'],
+        //     'password' => ['required', 'string', 'min:3', 'confirmed']
+        // ]);
+
         $request->validate([
             "username" => "required",
             "email" => "required",
