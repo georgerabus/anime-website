@@ -50,23 +50,108 @@
 
             <div class="form-group mt-3">
                 <label for="photo">Profile Photo</label>
-                <input type="file" name="photo" id="photo" class="form-control-file">
+                <input type="file" name="photo" id="photo" class="form-control-file" accept="image/*" onchange="uploadImage(event)">
                 @error('photo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
+            
             <div class="mt-3">
                 @if (auth()->user()->photo)
-                    <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Profile Picture" class="img-fluid" style="max-width: 150px;">
+                    <img id="image-preview" src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Profile Picture" class="img-fluid" style="max-width: 400px;">
                 @else
-                    <img src="{{ asset('default_photo.jpeg') }}" alt="Default Profile Picture" class="img-fluid" style="max-width: 150px;">
+                    <img id="image-preview" src="{{ asset('default_photo.jpeg') }}" alt="Default Profile Picture" class="img-fluid" style="max-width: 400px;">
                 @endif
             </div>
+            
+            <!-- Cropping Area -->
+            <div class="mt-3" id="crop-area" style="display: none;">
+                <button type="button" class="btn btn-primary mt-2" onclick="cropImage()">Crop Image</button>
+            </div>
+            
 
             <button type="submit" class="btn btn-primary mt-4">Update Profile</button>
         </form>
     </div>
 </div>
+
+<script>
+    var cropper;
+
+    function uploadImage(event) {
+        var formData = new FormData();
+        formData.append('photo', event.target.files[0]);
+
+        // Upload the image via AJAX
+        fetch('/upload-photo', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for security
+            }
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  var imageUrl = data.url;
+                  
+                  // Set the uploaded image in the preview area
+                  var image = document.getElementById('image-preview');
+                  image.src = imageUrl;
+                  document.getElementById('crop-area').style.display = 'block'; // Show the crop area
+
+                  // Initialize Cropper.js on the uploaded image
+                  if (cropper) {
+                      cropper.destroy();
+                  }
+                  cropper = new Cropper(image, {
+                      aspectRatio: 1,  // Maintain a square aspect ratio for cropping
+                      viewMode: 1,
+                      preview: '#cropped-image-preview',
+                  });
+              } else {
+                  alert('Image upload failed.');
+              }
+          })
+          .catch(error => {
+              console.error('Error uploading image:', error);
+          });
+    }
+
+    function cropImage() {
+        if (cropper) {
+            var canvas = cropper.getCroppedCanvas({
+                width: 200,
+                height: 200,
+            });
+
+            // Convert the cropped image to blob and send it via AJAX to save in the DB
+            canvas.toBlob(function(blob) {
+                var formData = new FormData();
+                formData.append('croppedImage', blob);
+
+                fetch('/save-cropped-image', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                            alert('Cropped image saved successfully.');
+                          // Optionally refresh the page or update the UI
+                      } else {
+                          alert('Failed to save the cropped image.');
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error saving cropped image:', error);
+                  });
+            });
+        }
+    }
+</script>
+
 
 
 @endsection

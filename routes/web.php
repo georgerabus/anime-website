@@ -29,3 +29,6 @@ Route::post('/comments/reply/{id}', [CommentController::class, 'reply'])->name('
 
 Route::get('/profile', [UserController::class, 'showEditUser'])->name('user-profile')->middleware('auth');
 Route::put('/profile/update', [UserController::class, 'editUser'])->name('profile-update')->middleware('auth');
+Route::post('/upload-photo', [UserController::class, 'uploadPhoto']);
+Route::post('/save-cropped-image', [UserController::class, 'saveCroppedImage']);
+
