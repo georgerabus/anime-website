@@ -17,7 +17,7 @@
 
         <div class="comment-list">
             @foreach ($comments as $comment)
-                @include('partials.comment-item', ['comment' => $comment])
+                @include('partials.comment-item', compact('comment'))
             @endforeach
         </div>
     </div>

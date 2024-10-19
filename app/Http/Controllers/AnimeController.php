@@ -19,8 +19,8 @@ class AnimeController extends Controller
         $totalCommentsCount = $comments->reduce(function ($count, $comment) {
             return $count + 1 + $comment->getTotalRepliesCount();
         }, 0);
-        
-        return view('pages.anime-page', ['comments' => $comments, 'totalCommentsCount' => $totalCommentsCount]);
+
+        return view('pages.anime-page', compact('comments', 'totalCommentsCount'));
     }
 
     public function animeList()
@@ -45,5 +45,4 @@ class AnimeController extends Controller
             // 'results' => $results,
         ]);
     }
-
 }

@@ -27,4 +27,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/comments-store', [CommentController::class, 'store'])->name(('comments-store'))->middleware('auth');
 Route::post('/comments/reply/{id}', [CommentController::class, 'reply'])->name('comments-reply')->middleware('auth');
 
-Route::get('/profile', [UserController::class, 'editUser'])->name('user-profile')->middleware('auth');
+Route::get('/profile', [UserController::class, 'showEditUser'])->name('user-profile')->middleware('auth');
+Route::put('/profile/update', [UserController::class, 'editUser'])->name('profile-update')->middleware('auth');
