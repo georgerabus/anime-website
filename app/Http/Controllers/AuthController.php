@@ -23,14 +23,16 @@ class AuthController
         ]);
         $credentials = $request->only("name", "password");
         if(Auth::attempt($credentials)){
-            return redirect(route('home'))->with('success', 'Logged in successfully');
+            $user = Auth::user();
+            return redirect(route('home'))->with('success', "{$user->name} has logged in successfully");
         }
         return redirect(route('home'))->with('error', 'Failed to log in');
     }
 
     public function logout(){
+        $user = Auth::user();
         Auth::logout();
-        return redirect(route('home'))->with('success', 'Logged out successfully');
+        return redirect(route('home'))->with('success', "{$user->name} has been logged out successfully");
     }       
 
     public function showRegistrationForm()
@@ -55,7 +57,7 @@ class AuthController
         try {
             if ($user->save()) {
                 Auth::login($user);
-                return redirect(route('home'))->with("success", "User created successfully!");
+                return redirect(route('home'))->with("success", "{$user->name} has been registered successfully.");
             }
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
