@@ -15,7 +15,6 @@
             {{session()->get('error')}}
         </div>
         @endif
-        
 
         <div class="jumbotron text-center">
             <h1>Welcome to Anime Website{{ Auth::check() ? ', ' . ucfirst(Auth::user()->name) : '' }}</h1>

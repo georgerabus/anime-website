@@ -27,9 +27,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('user-profile') }}">
                         
-                        Profile
+                     
                         
-                        <img style=" width: 30px; height: 30px;" src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('default_photo.jpeg') }}" alt="pfp" class="rounded-circle">
+                        <img style="margin-inline:5px; width: 30px; height: 30px;" src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('default_photo.jpeg') }}" alt="pfp" class="rounded-circle">
                     </a>
                 </li>
                 <li class="nav-item" style="padding-inline: 7px">
