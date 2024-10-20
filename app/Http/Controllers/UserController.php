@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Events\PasswordReset;
 
 class UserController
 {
@@ -37,38 +34,75 @@ class UserController
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
-    public function uploadPhoto(Request $request){
+        public function uploadPhoto(Request $request){
 
-        if ($request->hasFile('photo')) {
-            $image = $request->file('photo');
-            $path = $image->store('profile-photos', 'public');
+            if ($request->hasFile('photo')) {
+                $image = $request->file('photo');
+                $path = $image->store('profile-photos', 'public');
 
-            // Return the image URL so it can be displayed
-            return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
+                return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
+            }
+
+            return response()->json(['success' => false], 400);
         }
+
+        public function saveCroppedImage(Request $request){
+
+            $user = $request->user();
+
+            if ($request->hasFile('croppedImage')) {
+                if ($user->photo) {
+                    if (Storage::disk('public')->exists($user->photo)) {
+                        Storage::disk('public')->delete($user->photo);
+                        Log::info('Old photo deleted: ' . $user->photo);
+                    } else {
+                        Log::warning('Photo not found: ' . $user->photo);
+                    }
+                    
+                }
+
+                $image = $request->file('croppedImage');
+                $path = $image->store('profile-photos', 'public');
+
+                $user->photo = $path;
+                $user->save();
+
+            return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
+            }
 
         return response()->json(['success' => false], 400);
     }
 
-    public function saveCroppedImage(Request $request){
-
-        $user = $request->user();
-
-        if ($request->hasFile('croppedImage')) {
-            if ($user->photo) {
-                Storage::disk('public')->delete($user->photo);
-            }
-
-            $image = $request->file('croppedImage');
-            $path = $image->store('profile-photos', 'public');
-
-            $user->photo = $path;
-            $user->save();
-
-        return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
-        }
-
-    return response()->json(['success' => false], 400);
 }
 
-}
+
+// public function saveCroppedImage(Request $request) {
+//     $user = $request->user();
+
+//     if ($request->hasFile('croppedImage')) {
+//         if ($user->photo) {
+//             // Check if the old photo exists and delete it
+//             if (Storage::disk('public')->exists($user->photo)) {
+//                 Storage::disk('public')->delete($user->photo);
+//                 Log::info('Old photo deleted: ' . $user->photo);
+//             } else {
+//                 Log::warning('Photo not found: ' . $user->photo);
+//             }
+
+//             // Get the file extension of the original photo
+//             $extension = pathinfo($user->photo, PATHINFO_EXTENSION);
+//             $filename = pathinfo($user->photo, PATHINFO_FILENAME); // Get the filename without extension
+
+//             // Save the cropped image with the same name and extension as the original
+//             $path = $request->file('croppedImage')->storeAs('profile-photos', $filename . '.' . $extension, 'public');
+
+//             $user->photo = $path; // Update user photo path
+//             $user->save();
+
+//             return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
+//         }
+//     }
+
+//     return response()->json(['success' => false], 400);
+// }
+

@@ -46,7 +46,8 @@
                 @error('password_confirmation')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-            </div>            
+            </div>    
+                    
             <div class="form-group mt-3">
                 <label for="photo">Profile Photo</label>
                 <input type="file" name="photo" id="photo" class="form-control-file" accept="image/*" onchange="uploadImage(event)">
@@ -63,13 +64,11 @@
                 @endif
             </div>
             
-            <!-- Cropping Area -->
             <div class="mt-3" id="crop-area" style="display: none;">
                 <button type="button" class="btn btn-primary mt-2" onclick="cropImage()">Crop Image</button>
             </div>
         
-            <!-- Update Profile Button -->
-            <button type="submit" class="btn btn-primary mt-4">Update Profile</button>
+            <button type="submit" id="update" class="btn btn-primary mt-4">Update Profile</button>
         </form>
     </div>
 </div>
@@ -81,29 +80,29 @@
         var formData = new FormData();
         formData.append('photo', event.target.files[0]);
 
-        // Upload the image via AJAX
         fetch('/upload-photo', {
             method: 'POST',
             body: formData,
             headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for security
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' 
             }
         }).then(response => response.json())
           .then(data => {
               if (data.success) {
                   var imageUrl = data.url;
                   
-                  // Set the uploaded image in the preview area
                   var image = document.getElementById('image-preview');
                   image.src = imageUrl;
-                  document.getElementById('crop-area').style.display = 'block'; // Show the crop area
+                  document.getElementById('crop-area').style.display = 'block'; 
 
-                  // Initialize Cropper.js on the uploaded image
+                  var button = document.getElementById('update');
+                  document.getElementById('update').style.display = 'none';
+
                   if (cropper) {
                       cropper.destroy();
                   }
                   cropper = new Cropper(image, {
-                      aspectRatio: 1,  // Maintain a square aspect ratio for cropping
+                      aspectRatio: 1,  
                       viewMode: 1,
                       preview: '#cropped-image-preview',
                   });
@@ -119,11 +118,10 @@
     function cropImage() {
     if (cropper) {
         var canvas = cropper.getCroppedCanvas({
-            width: 200,  // Set the size for the cropped image
+            width: 200,  
             height: 200,
         });
 
-        // Convert the cropped image to a blob and send it via AJAX
         canvas.toBlob(function(blob) {
             var formData = new FormData();
             formData.append('croppedImage', blob);
@@ -138,16 +136,14 @@
             }).then(response => response.json())
               .then(data => {
                   if (data.success) {
-                      // Hide the crop area
                       document.getElementById('crop-area').style.display = 'none';
-
-                      // Destroy the Cropper.js instance to remove the cropping box
                       cropper.destroy();
                       cropper = null;
 
-                      // Update the profile image preview with the newly cropped image
+                      document.getElementById('update').style.display = 'block';
+                      
                       var imagePreview = document.getElementById('image-preview');
-                      var newImageUrl = URL.createObjectURL(blob);  // Create a local URL for the cropped image
+                      var newImageUrl = URL.createObjectURL(blob); 
                       imagePreview.src = newImageUrl;
                   } else {
                       alert('Failed to save the cropped image.');
@@ -159,10 +155,6 @@
         });
     }
 }
-
-
 </script>
-
-
 
 @endsection
