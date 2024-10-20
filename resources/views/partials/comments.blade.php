@@ -26,5 +26,10 @@
     function toggleReplyForm(element) {
         const form = element.closest('.reply-form').querySelector('form');
         form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+        
+        if (form.style.display === 'block') {
+            form.querySelector('textarea').focus();
+            form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }
 </script>
