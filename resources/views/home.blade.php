@@ -4,7 +4,6 @@
 
 @section('content')
 
-
     <div style="margin-top:100px; margin-bottom:100px">
         @if(session()->has('success'))
             <div class="alert alert-success" x-data="{show:true}" x-init="setTimeout(() => show = false, 3000)" x-show="show" >
@@ -19,13 +18,14 @@
         
 
         <div class="jumbotron text-center">
-            <h1>Welcome to Anime Website</h1>
+            <h1>Welcome to Anime Website{{ Auth::check() ? ', ' . ucfirst(Auth::user()->name) : '' }}</h1>
             <p>Explore the world of anime. Watch your favorites and discover new series!</p>
             <form action="{{ url('/search') }}" method="GET" class="d-flex justify-content-center">
                 <input type="text" name="query" class="form-control w-50" placeholder="Search for anime...">
                 <button type="submit" class="btn btn-primary ms-2">Search</button>
             </form>
         </div>
+        
 
         <div class="row">
             <div class="col-md-12">

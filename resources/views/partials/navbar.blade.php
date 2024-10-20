@@ -27,9 +27,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('user-profile')}}">Edit Profile</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="padding-inline: 7px">
                     <a class="nav-link" href="#" 
-                       onclick="event.preventDefault(); document.getElementById('submit-form').submit();">Log out</a>
+                       onclick="event.preventDefault(); document.getElementById('submit-form').submit();">
+                       <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
                 </li>
                 
                 <form id="submit-form" action="/logout" method="POST" style="display: none;">
