@@ -32,4 +32,5 @@ Route::get('/', [AnimeController::class, 'index'])->name('home');
 Route::get('/anime-list', [AnimeController::class, 'animeList'])->name('anime-list');
 Route::get('/contact', [AnimeController::class, 'contact'])->name('contact');
 Route::get('/search', [AnimeController::class, 'search'])->name('search');
+// Route::get('/anime/{id}', [AnimeController::class, 'animePage'])->name('animePage');
 Route::get('/anime', [AnimeController::class, 'animePage'])->name('animePage');

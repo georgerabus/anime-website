@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anime;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,16 +11,19 @@ class AnimeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $animes = Anime::all();
+        return view('home', compact('animes'));
     }
 
     public function animePage(){
+        // $anime = Anime::findOrFail($id);
         $comments = Comment::with(['user', 'replies.user'])->withCount('replies')->whereNull('parent_id')->latest()->get();
-
+        
         $totalCommentsCount = $comments->reduce(function ($count, $comment) {
             return $count + 1 + $comment->getTotalRepliesCount();
         }, 0);
 
+        // return view('pages.anime-page', compact('comments', 'totalCommentsCount', 'anime'));
         return view('pages.anime-page', compact('comments', 'totalCommentsCount'));
     }
 
