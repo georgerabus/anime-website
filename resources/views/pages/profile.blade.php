@@ -47,7 +47,6 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>            
-
             <div class="form-group mt-3">
                 <label for="photo">Profile Photo</label>
                 <input type="file" name="photo" id="photo" class="form-control-file" accept="image/*" onchange="uploadImage(event)">
@@ -68,8 +67,8 @@
             <div class="mt-3" id="crop-area" style="display: none;">
                 <button type="button" class="btn btn-primary mt-2" onclick="cropImage()">Crop Image</button>
             </div>
-            
-
+        
+            <!-- Update Profile Button -->
             <button type="submit" class="btn btn-primary mt-4">Update Profile</button>
         </form>
     </div>
@@ -118,38 +117,50 @@
     }
 
     function cropImage() {
-        if (cropper) {
-            var canvas = cropper.getCroppedCanvas({
-                width: 200,
-                height: 200,
-            });
+    if (cropper) {
+        var canvas = cropper.getCroppedCanvas({
+            width: 200,  // Set the size for the cropped image
+            height: 200,
+        });
 
-            // Convert the cropped image to blob and send it via AJAX to save in the DB
-            canvas.toBlob(function(blob) {
-                var formData = new FormData();
-                formData.append('croppedImage', blob);
+        // Convert the cropped image to a blob and send it via AJAX
+        canvas.toBlob(function(blob) {
+            var formData = new FormData();
+            formData.append('croppedImage', blob);
 
-                fetch('/save-cropped-image', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                }).then(response => response.json())
-                  .then(data => {
-                      if (data.success) {
-                            alert('Cropped image saved successfully.');
-                          // Optionally refresh the page or update the UI
-                      } else {
-                          alert('Failed to save the cropped image.');
-                      }
-                  })
-                  .catch(error => {
-                      console.error('Error saving cropped image:', error);
-                  });
-            });
-        }
+            // Send cropped image via AJAX
+            fetch('/save-cropped-image', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      // Hide the crop area
+                      document.getElementById('crop-area').style.display = 'none';
+
+                      // Destroy the Cropper.js instance to remove the cropping box
+                      cropper.destroy();
+                      cropper = null;
+
+                      // Update the profile image preview with the newly cropped image
+                      var imagePreview = document.getElementById('image-preview');
+                      var newImageUrl = URL.createObjectURL(blob);  // Create a local URL for the cropped image
+                      imagePreview.src = newImageUrl;
+                  } else {
+                      alert('Failed to save the cropped image.');
+                  }
+              })
+              .catch(error => {
+                  console.error('Error saving cropped image:', error);
+              });
+        });
     }
+}
+
+
 </script>
 
 
