@@ -25,7 +25,12 @@
                 @endif
                 @if(Auth::user())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('user-profile')}}">Edit Profile</a>
+                    <a class="nav-link" href="{{ route('user-profile') }}">
+                        
+                        Profile
+                        
+                        <img style=" width: 30px; height: 30px;" src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('default_photo.jpeg') }}" alt="pfp" class="rounded-circle">
+                    </a>
                 </li>
                 <li class="nav-item" style="padding-inline: 7px">
                     <a class="nav-link" href="#" 

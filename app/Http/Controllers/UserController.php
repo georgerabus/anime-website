@@ -74,9 +74,7 @@ class UserController
     
 
     public function uploadPhoto(Request $request)
-    {
-        $user = $request->user();
-    
+    {    
         if ($request->hasFile('photo')) {
             $image = $request->file('photo');
             $tempPath = $image->store('temp-profile-photos', 'public'); 
