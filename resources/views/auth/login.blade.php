@@ -22,7 +22,7 @@
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control" id="username" required autofocus>
+                                <input type="text" name="name" class="form-control" id="name" required autofocus>
                             </div>
     
 
@@ -36,6 +36,7 @@
                             {{-- <div class="mt-3 text-center">
                                 <a href="{{ route('password.request') }}">Forgot Your Password?</a>
                             </div> --}}
+                            
                             <div class="mt-3 text-center">
                                 <a href="{{ route('register') }}">Don't have an account? Register</a>
                             </div>

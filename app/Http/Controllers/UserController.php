@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 
 class UserController
 {
@@ -28,7 +29,7 @@ class UserController
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
     
-        if ($request->password) {
+        if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
     
@@ -42,17 +43,17 @@ class UserController
                 }
     
                 Storage::disk('public')->move($tempPath, $permanentPath);
-    
                 $user->photo = $permanentPath;
             }
         }
     
         $user->save();
-    
         $this->cleanUpTempFolder();
-    
+        Log::info('User password after update: ' . $user->password);
+
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
+    
     
     private function cleanUpTempFolder()
     {
