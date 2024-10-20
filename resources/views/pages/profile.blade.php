@@ -60,7 +60,7 @@
                 @if (auth()->user()->photo)
                     <img id="image-preview" src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Profile Picture" class="img-fluid" style="max-width: 400px;">
                 @else
-                    <img id="image-preview" src="{{ asset('default_photo.jpeg') }}" alt="Default Profile Picture" class="img-fluid" style="max-width: 400px;">
+                    <img id="image-preview" width="200px" src="{{ asset('default_photo.jpeg') }}" alt="Default Profile Picture" class="img-fluid" style="max-width: 400px;">
                 @endif
             </div>
             
@@ -126,7 +126,6 @@
             var formData = new FormData();
             formData.append('croppedImage', blob);
 
-            // Send cropped image via AJAX
             fetch('/save-cropped-image', {
                 method: 'POST',
                 body: formData,

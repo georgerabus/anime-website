@@ -34,45 +34,57 @@ class UserController
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
-        public function uploadPhoto(Request $request){
-
-            if ($request->hasFile('photo')) {
-                $image = $request->file('photo');
-                $path = $image->store('profile-photos', 'public');
-
-                return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
-            }
-
-            return response()->json(['success' => false], 400);
-        }
-
-        public function saveCroppedImage(Request $request){
-
-            $user = $request->user();
-
-            if ($request->hasFile('croppedImage')) {
-                if ($user->photo) {
-                    if (Storage::disk('public')->exists($user->photo)) {
-                        Storage::disk('public')->delete($user->photo);
-                        Log::info('Old photo deleted: ' . $user->photo);
-                    } else {
-                        Log::warning('Photo not found: ' . $user->photo);
-                    }
-                    
-                }
-
-                $image = $request->file('croppedImage');
-                $path = $image->store('profile-photos', 'public');
-
-                $user->photo = $path;
-                $user->save();
-
+    public function uploadPhoto(Request $request)
+    {
+        $user = $request->user();
+    
+        // Check if a photo file is present in the request
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $path = $image->store('profile-photos', 'public');
+    
+            // Save the path of the uploaded original image to the user's profile
+            $user->photo = $path;
+            $user->save();
+    
             return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
-            }
-
+        }
+    
         return response()->json(['success' => false], 400);
     }
-
+    
+    public function saveCroppedImage(Request $request)
+    {
+        $user = $request->user();
+    
+        // Only proceed if croppedImage is provided
+        if ($request->hasFile('croppedImage')) {
+    
+            // Check if there is already an existing photo (from the original upload)
+            if ($user->photo) {
+                if (Storage::disk('public')->exists($user->photo)) {
+                    Storage::disk('public')->delete($user->photo); // Delete the original photo
+                    Log::info('Old original photo deleted: ' . $user->photo);
+                } else {
+                    Log::warning('Original photo not found: ' . $user->photo);
+                }
+            }
+    
+            // Storing the new cropped photo
+            $image = $request->file('croppedImage');
+            $path = $image->store('profile-photos', 'public');
+    
+            // Update the user's profile with the new cropped photo path
+            $user->photo = $path;
+            $user->save();
+    
+            return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
+        }
+    
+        return response()->json(['success' => false], 400);
+    }
+    
+        
 }
 
 
