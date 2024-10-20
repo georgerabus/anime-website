@@ -1,6 +1,5 @@
 @extends('layouts.app')
-{{-- @section('title', $anime->title) --}}
-@section('title', 'Name')
+@section('title', $anime->title)
 
 @section('animePage')
 

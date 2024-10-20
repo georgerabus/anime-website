@@ -32,38 +32,19 @@
             </div>
 
 
-    @php
-        $animes = [
-            [
-                'title' => 'Anime Title 1',
-                'description' => 'Description of Anime 1. A short overview of the story or plot.',
-                'image' => 'placeholder.svg'
-            ],
-            [
-                'title' => 'Anime Title 2',
-                'description' => 'Description of Anime 2. A short overview of the story or plot.',
-                'image' => 'placeholder.svg'
-            ],
-            [
-                'title' => 'Anime Title 3',
-                'description' => 'Description of Anime 3. A short overview of the story or plot.',
-                'image' => 'placeholder.svg'
-            ],
-        ];
-    @endphp
-
-    @foreach ($animes as $anime)
-        <div class="col-md-4"> 
-            <div class="card mb-4"> 
-                <img src="{{ $anime['image'] }}" class="card-img-top" alt="{{ $anime['title'] }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $anime['title'] }}</h5>
-                    <p class="card-text">{{ $anime['description'] }}</p>
-                    <a href="{{route('animePage')}}" class="btn btn-primary">Watch Now</a>
+            @foreach ($animes as $anime)
+            <div class="col-md-4"> 
+                <div class="card mb-4"> 
+                    <img src="{{  asset('storage/' . $anime->photo) }}" class="card-img-top" alt="{{ $anime->title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $anime->title }}</h5>
+                        <p class="card-text">{{ $anime->description }}</p>
+                        <a href="{{ route('animePage', ['id' => $anime->id]) }}" class="btn btn-primary">Watch Now</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+        
 
 @endsection
 
