@@ -35,6 +35,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/admin/list', [AdminController::class, 'list'])->name('adminList');
     Route::get('/admin/list/{id}', [AdminController::class, 'listEpisodes'])->name('adminListEpisodes');
 
+    Route::get('/anime/{id}/edit', [AnimeController::class, 'edit'])->name('editAnime');
+    Route::post('/anime/{id}', [AnimeController::class, 'update'])->name('updateAnime');
+    Route::delete('/anime/{id}', [AnimeController::class, 'destroy'])->name('deleteAnime');
+    
+    
+    Route::post('/admin/anime', [AdminController::class, 'storeAnime'])->middleware('admin')->name('storeAnime');
+    Route::post('/admin/episode', [AdminController::class, 'storeEpisode'])->middleware('admin')->name('storeEpisode');
+
     Route::get('/anime/{id}/episodes/{episode_id}/edit', [EpisodeController::class, 'editEpisode'])->name('editEpisode');
     Route::post('/anime/{id}/episodes/{episode_id}/edit', [EpisodeController::class, 'updateEpisode'])->name('updateEpisode');
     Route::delete('/anime/{id}/episodes/{episode_id}', [EpisodeController::class, 'deleteEpisode'])->name('deleteEpisode');
@@ -43,8 +51,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('/admin/users', [AdminController::class, 'editUser'])->name('adminEditUser');
     
-    Route::post('/admin/anime', [AdminController::class, 'storeAnime'])->middleware('admin')->name('storeAnime');
-    Route::post('/admin/episode', [AdminController::class, 'storeEpisode'])->middleware('admin')->name('storeEpisode');
 });
 
 // Public routes

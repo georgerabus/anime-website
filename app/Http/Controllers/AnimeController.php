@@ -36,6 +36,38 @@ class AnimeController extends Controller
         return view('pages.anime-page', compact('comments', 'totalCommentsCount', 'anime', 'currentEpisode'));
     }
     
+    public function edit($id)
+    {
+        $anime = Anime::findOrFail($id);
+        return view('pages.edit-anime', compact('anime'));
+    }
+
+    // Update the specific anime in the database
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'photo' => 'nullable',
+        ]);
+
+        $anime = Anime::findOrFail($id);
+        $anime->title = $request->input('title');
+        $anime->description = $request->input('description');
+        $anime->photo = $request->input('photo'); // Assuming you have a field for photo URL
+        $anime->save();
+
+        return redirect()->route('adminList')->with('success', 'Anime updated successfully.');
+    }
+
+    // Delete a specific anime
+    public function destroy($id)
+    {
+        $anime = Anime::findOrFail($id);
+        $anime->delete();
+
+        return redirect()->route('adminList')->with('success', 'Anime deleted successfully.');
+    }
 
     public function contact()
     {

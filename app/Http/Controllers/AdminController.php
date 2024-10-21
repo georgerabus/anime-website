@@ -22,11 +22,15 @@ class AdminController
         $animes = Anime::all();
         return view('pages.admin-view-list', compact('animes'));
     }
-    function listEpisodes($id){
-        $anime = Anime::with('episodes')->findOrFail($id);
-        // dd($anime->title);
+    public function listEpisodes($id) 
+    {
+        $anime = Anime::with(['episodes' => function($query) {
+            $query->orderBy('episode_id', 'asc'); 
+        }])->findOrFail($id);
+    
         return view('pages.admin-view-list-episodes', compact('anime'));
     }
+    
 
     function editUser(){
         $users = User::all();
@@ -55,6 +59,9 @@ public function storeEpisode(Request $request)
     $episode->anime_id=$request->anime_id;
     $episode->episode_id = $request->episode_id;
     $episode->episode = $request->episode;
+    if($request->episode_title){
+    $episode->episode_title = $request->episode_title;
+    }
     $episode->save();
     return redirect()->back()->with('success', 'Added episode successfully');
 }

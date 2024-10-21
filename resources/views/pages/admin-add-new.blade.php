@@ -47,6 +47,10 @@
             <input type="number" class="form-control" id="episode_id" name="episode_id" required>
         </div>
         <div class="mb-3">
+            <label for="episode_title" class="form-label">Episode Title</label>
+            <input type="text" class="form-control" id="episode_title" name="episode_title" placeholder="Optional Title">
+        </div>
+        <div class="mb-3">
             <label for="episode" class="form-label">Episode URL</label>
             <input type="text" class="form-control" id="episode" name="episode" required>
         </div>
