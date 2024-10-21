@@ -39,7 +39,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('/anime/{id}', [AnimeController::class, 'update'])->name('updateAnime');
     Route::delete('/anime/{id}', [AnimeController::class, 'destroy'])->name('deleteAnime');
     
-    
     Route::post('/admin/anime', [AdminController::class, 'storeAnime'])->middleware('admin')->name('storeAnime');
     Route::post('/admin/episode', [AdminController::class, 'storeEpisode'])->middleware('admin')->name('storeEpisode');
 

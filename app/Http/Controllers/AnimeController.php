@@ -18,10 +18,8 @@ class AnimeController extends Controller
     public function animePage($id, $episode_id = null) {
         $anime = Anime::with('episodes')->findOrFail($id);
     
-        // If the user hasn't selected an episode, default to the first one
         $currentEpisode = $episode_id ? $anime->episodes->find($episode_id) : $anime->episodes->first();
     
-        // Load comments only for the current episode
         $comments = Comment::with(['user', 'replies.user'])
                     ->withCount('replies')
                     ->where('episode_id', $currentEpisode->id)
@@ -42,7 +40,6 @@ class AnimeController extends Controller
         return view('pages.edit-anime', compact('anime'));
     }
 
-    // Update the specific anime in the database
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -55,11 +52,10 @@ class AnimeController extends Controller
         $anime->title = $request->input('title');
         $anime->description = $request->input('description');
     
-        // Check if the photo is uploaded
         if ($request->hasFile('photo')) {
             $image = $request->file('photo');
             $imagePath = $image->store('anime-photos', 'public');
-            $anime->photo = $imagePath; // Save the new photo path
+            $anime->photo = $imagePath; 
         } elseif ($request->input('delete_photo')) {
             $anime->photo = '/placeholder.svg'; 
         }
@@ -70,7 +66,6 @@ class AnimeController extends Controller
     }
     
 
-    // Delete a specific anime
     public function destroy($id)
     {
         $anime = Anime::findOrFail($id);

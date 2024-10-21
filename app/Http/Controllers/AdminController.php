@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Anime;
 use App\Models\Episode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController
 {
@@ -15,7 +16,11 @@ class AdminController
 
     function addNew(){
         $animes = Anime::all();
-        return view('pages.admin-add-new', compact('animes'));
+            // Get the highest episode_id for each anime
+        $highestEpisodeIds = Episode::select('anime_id', DB::raw('MAX(episode_id) as max_episode_id'))
+        ->groupBy('anime_id')
+        ->pluck('max_episode_id', 'anime_id');
+        return view('pages.admin-add-new', compact('animes',  'highestEpisodeIds'));
     }
     
     function list(){

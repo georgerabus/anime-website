@@ -36,7 +36,7 @@
         @csrf
         <div class="mb-3">
             <label for="anime_id" class="form-label">Select Anime</label>
-            <select class="form-select" id="anime_id" name="anime_id" required>
+            <select class="form-select" id="anime_id" name="anime_id" required onchange="updateEpisodeId()">
                 @foreach($animes as $anime)
                     <option value="{{ $anime->id }}">{{ $anime->title }}</option>
                 @endforeach
@@ -44,7 +44,7 @@
         </div>
         <div class="mb-3">
             <label for="episode_id" class="form-label">Episode ID</label>
-            <input type="number" class="form-control" id="episode_id" name="episode_id" required>
+            <input type="number" class="form-control" id="episode_id" name="episode_id" value="1" required>
         </div>
         <div class="mb-3">
             <label for="episode_title" class="form-label">Episode Title</label>
@@ -57,4 +57,26 @@
         <button type="submit" class="btn btn-primary">Add Episode</button>
     </form>
 </div>
+
+<script>
+    function updateEpisodeId() {
+        var animeId = document.getElementById('anime_id').value;
+        var episodeIdField = document.getElementById('episode_id');
+
+        // Example of the PHP array encoded to JavaScript
+        var highestEpisodeIds = @json($highestEpisodeIds);
+
+        // Set the episode ID based on the selected anime
+        if (highestEpisodeIds[animeId]) {
+            episodeIdField.value = parseInt(highestEpisodeIds[animeId]) + 1;
+        } else {
+            episodeIdField.value = 1; // Default to 1 if no episodes exist
+        }
+    }
+
+    // Initial call to set the episode ID based on the default selected anime
+    document.addEventListener('DOMContentLoaded', function () {
+        updateEpisodeId();
+    });
+</script>
 @endsection

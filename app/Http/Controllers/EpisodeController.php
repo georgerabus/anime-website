@@ -19,7 +19,6 @@ class EpisodeController
     {
         $episode = Episode::where('id', $episode_id)->where('anime_id', $anime_id)->firstOrFail();
     
-        // Update the fields
         $episode->episode = $request->input('episode');
         $episode->episode_id = $request->input('episode_id');
         $episode->episode_title =  $request->input('episode_title');

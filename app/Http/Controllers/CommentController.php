@@ -23,7 +23,6 @@ class CommentController
         return redirect(route('animePage', ['id' => $anime_id, 'episode_id' => $request->episode_id]));
     }
     
-    
 
     public function reply(Request $request, $id)
     {
@@ -37,7 +36,6 @@ class CommentController
         $reply->parent_id = $id; 
         $reply->save();
 
-        // Redirect back or return a response (you may want to handle it as an AJAX response)
         return redirect()->back()->with('success', 'Reply submitted successfully!');
     }
 

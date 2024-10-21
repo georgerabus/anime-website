@@ -38,7 +38,6 @@
                     </ul>
                     
 
-
                     @else
                         <div class="alert alert-warning">No episodes available</div>
                     @endif
