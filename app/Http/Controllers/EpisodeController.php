@@ -22,6 +22,7 @@ class EpisodeController
         // Update the fields
         $episode->episode = $request->input('episode');
         $episode->episode_id = $request->input('episode_id');
+        $episode->episode_title =  $request->input('episode_title');
         
         $episode->save();
     

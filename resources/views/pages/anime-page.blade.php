@@ -11,7 +11,11 @@
                 @foreach ($anime->episodes as $episode)
                 <a href="{{ route('animePage', ['id' => $anime->id, 'episode_id' => $episode->id]) }}" 
                     class="btn {{ $currentEpisode->id == $episode->id ? 'btn-primary' : 'btn-secondary' }}">
+                    @if (!empty($episode->episode_title))
+                    {{$episode->episode_title}}
+                    @else
                     Episode {{ $episode->episode_id }}
+                    @endif
                 </a>
             @endforeach
             </ul>

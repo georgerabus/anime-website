@@ -15,7 +15,7 @@
                         @csrf
                         <div class="form-group mb-3">
                             <label for="episode">Episode Title</label>
-                            {{-- <input type="text" name="episode" class="form-control" value="{{ $episode->episode_title }}" required> --}}
+                            <input type="text" name="episode_title" class="form-control" value="{{ $episode->episode_title }}" required>
                         </div>
 
                         <div class="form-group mb-3">
