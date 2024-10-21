@@ -1,6 +1,6 @@
 <div class="comment mt-3" id="comment-{{ $comment->id }}">
     <div class="comment-text">
-        <img style="margin-inline:5px; width: 30px; height: 30px;" src="{{ auth()->user()->photo ? asset('storage/' . $comment->user->photo) : asset('default_photo.jpeg') }}" alt="pfp" class="rounded-circle">
+        <img style="margin-inline:5px; width: 30px; height: 30px;" src="{{ $comment->user->photo ? asset('storage/' . $comment->user->photo) : asset('default_photo.jpeg') }}" alt="pfp" class="rounded-circle">
         <strong>{{ $comment->user->name }}</strong>: {{ $comment->text }}
     </div>
 

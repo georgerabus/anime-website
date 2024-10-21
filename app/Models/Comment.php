@@ -8,8 +8,7 @@ class Comment extends Model
 {
     protected $fillable = ['text', 'user_id', 'parent_id'];
 
-
-    public $timestamps = false;
+    // public $timestamps = false;
 
     public function user()
     {
