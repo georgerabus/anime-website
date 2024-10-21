@@ -38,6 +38,32 @@ class CommentController
 
         return redirect()->back()->with('success', 'Reply submitted successfully!');
     }
-
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+        
+        // Check if the user is an admin or the comment owner
+        if (Auth::user()->is_admin || $comment->user_id === Auth::id()) {
+            $comment->delete();
+            return redirect()->back()->with('success', 'Comment deleted successfully.');
+        }
+    
+        return redirect()->back()->with('error', 'You cannot delete this comment.');
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'text' => 'required|string|max:500',
+        ]);
+    
+        $comment = Comment::findOrFail($id);
+        $comment->text = $request->input('text');
+        $comment->save();
+    
+        return response()->json(['success' => true]);
+    }
+    
+    
 
 }

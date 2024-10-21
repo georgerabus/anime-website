@@ -18,9 +18,11 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    
+
     Route::post('anime/{anime_id}/comments', [CommentController::class, 'store'])->name('comments-store');
     Route::post('/comments/reply/{id}', [CommentController::class, 'reply'])->name('comments-reply');
+    Route::put('/comments/update/{id}', [CommentController::class, 'update'])->name('comments-update');
+    Route::delete('/comments/delete/{id}', [CommentController::class, 'destroy'])->name('comments-destroy');
     
     Route::get('/profile', [UserController::class, 'showEditUser'])->name('user-profile');
     Route::put('/profile/update', [UserController::class, 'editUser'])->name('profile-update');
@@ -39,8 +41,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('/anime/{id}', [AnimeController::class, 'update'])->name('updateAnime');
     Route::delete('/anime/{id}', [AnimeController::class, 'destroy'])->name('deleteAnime');
     
-    Route::post('/admin/anime', [AdminController::class, 'storeAnime'])->middleware('admin')->name('storeAnime');
-    Route::post('/admin/episode', [AdminController::class, 'storeEpisode'])->middleware('admin')->name('storeEpisode');
+    Route::post('/admin/anime', [AdminController::class, 'storeAnime'])->name('storeAnime');
+    Route::post('/admin/episode', [AdminController::class, 'storeEpisode'])->name('storeEpisode');
 
     Route::get('/anime/{id}/episodes/{episode_id}/edit', [EpisodeController::class, 'editEpisode'])->name('editEpisode');
     Route::post('/anime/{id}/episodes/{episode_id}/edit', [EpisodeController::class, 'updateEpisode'])->name('updateEpisode');
