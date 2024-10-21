@@ -48,17 +48,27 @@ class AnimeController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'photo' => 'nullable',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
         $anime = Anime::findOrFail($id);
         $anime->title = $request->input('title');
         $anime->description = $request->input('description');
-        $anime->photo = $request->input('photo'); // Assuming you have a field for photo URL
+    
+        // Check if the photo is uploaded
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imagePath = $image->store('anime-photos', 'public');
+            $anime->photo = $imagePath; // Save the new photo path
+        } elseif ($request->input('delete_photo')) {
+            $anime->photo = '/placeholder.svg'; 
+        }
+    
         $anime->save();
-
+    
         return redirect()->route('adminList')->with('success', 'Anime updated successfully.');
     }
+    
 
     // Delete a specific anime
     public function destroy($id)

@@ -48,6 +48,9 @@ public function storeAnime(Request $request)
         $path = $image->store('anime-photos', 'public'); 
         $anime->photo = $path;
     }
+    else{
+        $anime->photo = '/placeholder.svg';
+    }
     $anime->save();
     return redirect()->back()->with('success', 'Added anime successfully');
 

@@ -11,7 +11,7 @@
                     <h4>Edit Anime</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('updateAnime', ['id' => $anime->id]) }}" method="POST">
+                    <form action="{{ route('updateAnime', ['id' => $anime->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="title">Anime Title</label>
@@ -25,7 +25,16 @@
 
                         <div class="form-group mb-3">
                             <label for="photo">Photo</label>
-                            <input  name="photo" class="form-control" value="{{ $anime->photo }}">
+                            <div class="mt-3 mb-3">
+                                <img id="image-preview" src="{{ asset('storage/' . $anime->photo) }}" alt="Anime Photo" class="img-fluid" style="max-width: 400px;">
+                            </div>
+                            <input type="file" name="photo" class="form-control" accept="image/*">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>
+                                <input type="checkbox" name="delete_photo" value="1"> Delete current photo
+                            </label>
                         </div>
 
                         <button type="submit" class="btn btn-success">Update Anime</button>
