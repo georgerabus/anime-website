@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AnimeController;
@@ -28,7 +29,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('/admin', [])->name('admin-page');
+    Route::get('/admin', [AdminController::class, 'show'])->name('admin-page');
 });
 
 // Public routes

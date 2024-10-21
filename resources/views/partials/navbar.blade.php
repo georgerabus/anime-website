@@ -9,13 +9,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Home</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('contact')}}">Contact</a>
                 </li>
                 @if(Auth::check() && Auth::user()->is_admin)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('anime-list') }}">Admin Page</a>
+                    <a class="nav-link" href="{{ route('admin-page') }}">Admin Page</a>
                 </li>
                 @endif
                 @if(!Auth::user())
