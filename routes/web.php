@@ -17,7 +17,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     
-    Route::post('/comments-store', [CommentController::class, 'store'])->name('comments-store');
+    Route::post('anime/{anime_id}/comments', [CommentController::class, 'store'])->name('comments-store');
     Route::post('/comments/reply/{id}', [CommentController::class, 'reply'])->name('comments-reply');
     
     Route::get('/profile', [UserController::class, 'showEditUser'])->name('user-profile');
@@ -32,4 +32,4 @@ Route::get('/', [AnimeController::class, 'index'])->name('home');
 Route::get('/anime-list', [AnimeController::class, 'animeList'])->name('anime-list');
 Route::get('/contact', [AnimeController::class, 'contact'])->name('contact');
 Route::get('/search', [AnimeController::class, 'search'])->name('search');
-Route::get('/anime/{id}', [AnimeController::class, 'animePage'])->name('animePage');
+Route::get('anime/{id}/episode/{episode_id?}', [AnimeController::class, 'animePage'])->name('animePage');

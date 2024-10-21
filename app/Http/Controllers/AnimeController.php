@@ -15,16 +15,27 @@ class AnimeController extends Controller
         return view('home', compact('animes'));
     }
 
-    public function animePage($id){
-        $anime = Anime::findOrFail($id);
-        $comments = Comment::with(['user', 'replies.user'])->withCount('replies')->whereNull('parent_id')->latest()->get();
-        
+    public function animePage($id, $episode_id = null) {
+        $anime = Anime::with('episodes')->findOrFail($id);
+    
+        // If the user hasn't selected an episode, default to the first one
+        $currentEpisode = $episode_id ? $anime->episodes->find($episode_id) : $anime->episodes->first();
+    
+        // Load comments only for the current episode
+        $comments = Comment::with(['user', 'replies.user'])
+                    ->withCount('replies')
+                    ->where('episode_id', $currentEpisode->id)
+                    ->whereNull('parent_id')
+                    ->latest()
+                    ->get();
+    
         $totalCommentsCount = $comments->reduce(function ($count, $comment) {
             return $count + 1 + $comment->getTotalRepliesCount();
         }, 0);
-
-        return view('pages.anime-page', compact('comments', 'totalCommentsCount', 'anime'));
+    
+        return view('pages.anime-page', compact('comments', 'totalCommentsCount', 'anime', 'currentEpisode'));
     }
+    
 
     public function animeList()
     {

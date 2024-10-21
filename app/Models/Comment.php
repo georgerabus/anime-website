@@ -8,12 +8,19 @@ class Comment extends Model
 {
     protected $fillable = ['text', 'user_id', 'parent_id'];
 
+
+    public $timestamps = false;
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Define the relationship for replies
+    public function episode()
+    {
+        return $this->belongsTo(Episode::class);
+    }
+
     public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id');

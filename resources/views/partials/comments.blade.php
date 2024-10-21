@@ -5,8 +5,11 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">Leave a Comment</h5>
-                <form action="{{ route('comments-store') }}" method="POST">
+                <form action="{{ route('comments-store', ['anime_id' => $anime->id]) }}" method="POST">
                     @csrf
+                    <!-- Automatically set the currently selected episode's ID -->
+                    <input type="hidden" name="episode_id" value="{{ $currentEpisode->id }}" required>
+                
                     <div class="form-group">
                         <textarea class="form-control" name="comment" rows="3" placeholder="Write your comment here..." required></textarea>
                     </div>

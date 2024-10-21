@@ -5,33 +5,45 @@
 
 <div class="container-fluid" style="margin-top: 20px">
     <div class="content">
-        <div class="episode-list p-3" style="margin-top: 42px; ">
+        <div class="episode-list p-3" style="margin-top: 42px;">
             <h4>Episode List</h4>
             <ul class="list-group">
-                <li class="list-group-item">Episode 1</li>
-                <li class="list-group-item">Episode 2</li>
-                <li class="list-group-item">Episode 3</li>
-                <li class="list-group-item">Episode 4</li>
-                <li class="list-group-item">Episode 5</li>
+                @foreach ($anime->episodes as $episode)
+                <a href="{{ route('animePage', ['id' => $anime->id, 'episode_id' => $episode->id]) }}" 
+                    class="btn {{ $currentEpisode->id == $episode->id ? 'btn-primary' : 'btn-secondary' }}">
+                    Episode {{ $episode->episode_id }}
+                </a>
+            @endforeach
             </ul>
         </div>
 
         <div class="canvas-container d-flex justify-content-center align-items-center">
             <div id="canvas">
-                <video width="1036" height="578" controls>
-                    <source src="https://e9.animeheaven.me/video.mp4?16d4940da72e912ecef5b9e18f9af2d1"  type="video/mp4"> <!-- -->
-                    Your browser does not support the video tag.
-                </video>                    
+                @if($currentEpisode)
+                    <video width="1036" height="578" controls id="videoPlayer">
+                        <source src="{{ $currentEpisode->episode }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>  
+                @endif                
             </div>
         </div>
 
-        <div class="about-section p-3" style="margin-top: 42px; ">
+        <div class="about-section p-3" style="margin-top: 42px;">
             <h4>About</h4>
-            <p>This section contains information about the anime series. You can include details such as the synopsis, character descriptions, and any other relevant information.</p>
+            <p>{{ $anime->description }}</p>
         </div>
     </div>
     @include('partials.comments')
 
 </div>
+
+<script>
+    function loadEpisode(videoUrl) {
+        var videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.src = videoUrl;
+        videoPlayer.load();
+        videoPlayer.play();
+    }
+</script>
 
 @endsection

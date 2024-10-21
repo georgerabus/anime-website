@@ -8,17 +8,22 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController
 {
-    public function store(Request $request){
+    public function store(Request $request, $anime_id) {
         $request->validate([
             'comment' => 'required|string|max:500',
+            'episode_id' => 'required|exists:episodes,id',
         ]);
-
+    
         $comment = new Comment();
-        $comment->user_id = Auth::id();  
+        $comment->user_id = Auth::id();
         $comment->text = $request->comment;
+        $comment->episode_id = $request->episode_id; 
         $comment->save();
-        return redirect(route('animePage'));
+    
+        return redirect(route('animePage', ['id' => $anime_id, 'episode_id' => $request->episode_id]));
     }
+    
+    
 
     public function reply(Request $request, $id)
     {

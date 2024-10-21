@@ -9,5 +9,8 @@ class Anime extends Model
     public $timestamps = false;
     public $fillable = ['title', 'description', 'photo', ];
 
-
+    public function episodes()
+    {
+        return $this->hasMany(Episode::class);
+    }
 }
