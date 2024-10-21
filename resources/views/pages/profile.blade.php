@@ -5,7 +5,11 @@
 @section('profile')
 <div class="container">
     <div style="margin-top: 70px">
-        <h2>Profile Settings</h2>
+        @if(Auth::user()->is_admin)
+        <h2>Admin Profile Settings</h2>
+        @else
+        <h2> Profile Settings</h2>
+        @endif
         @if(session()->has('success'))
             <div class="alert alert-success" x-data="{show:true}" x-init="setTimeout(() => show = false, 3000)" x-show="show" >
                 {{session()->get('success')}}

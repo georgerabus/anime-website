@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('episode');
             $table->foreign('anime_id')->references('id')->on('animes')->onDelete('cascade');
         });
-                Schema::create('comments', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('text', 500);

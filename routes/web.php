@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::delete('/anime/{id}/episodes/{episode_id}', [EpisodeController::class, 'deleteEpisode'])->name('deleteEpisode');
     Route::post('/anime/{id}/episodes/rename', [EpisodeController::class, 'renameEpisodeId'])->name('renameEpisodeId');
 
-
+    //future implementation
     Route::get('/admin/users', [AdminController::class, 'editUser'])->name('adminEditUser');
     
 });

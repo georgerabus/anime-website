@@ -50,3 +50,12 @@ body {
 .comment-text {
     margin-bottom: 5px; /* Space between text and reply form */
 }
+
+.card:hover {
+    border-color: #007bff; /* Change border color on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+}
+
+.reply-form a:hover {
+    text-decoration: underline; /* Underline reply link on hover */
+}
