@@ -14,7 +14,7 @@
                 </li>
                 @if(Auth::check() && Auth::user()->is_admin)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin-page') }}">Admin Page</a>
+                    <a class="nav-link" href="{{ route('adminPage') }}">Admin Page</a>
                 </li>
                 @endif
                 @if(!Auth::user())

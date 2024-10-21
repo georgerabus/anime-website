@@ -22,6 +22,11 @@ class AdminController
         $animes = Anime::all();
         return view('pages.admin-view-list', compact('animes'));
     }
+    function listEpisodes($id){
+        $anime = Anime::with('episodes')->findOrFail($id);
+        // dd($anime->title);
+        return view('pages.admin-view-list-episodes', compact('anime'));
+    }
 
     function editUser(){
         $users = User::all();

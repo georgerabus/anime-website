@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\EpisodeController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -29,9 +30,17 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin-page');
+    Route::get('/admin', [AdminController::class, 'index'])->name('adminPage');
     Route::get('/admin/add', [AdminController::class, 'addNew'])->name('adminAddNew');
     Route::get('/admin/list', [AdminController::class, 'list'])->name('adminList');
+    Route::get('/admin/list/{id}', [AdminController::class, 'listEpisodes'])->name('adminListEpisodes');
+
+    Route::get('/anime/{id}/episodes/{episode_id}/edit', [EpisodeController::class, 'editEpisode'])->name('editEpisode');
+    Route::post('/anime/{id}/episodes/{episode_id}/edit', [EpisodeController::class, 'updateEpisode'])->name('updateEpisode');
+    Route::delete('/anime/{id}/episodes/{episode_id}', [EpisodeController::class, 'deleteEpisode'])->name('deleteEpisode');
+    Route::post('/anime/{id}/episodes/rename', [EpisodeController::class, 'renameEpisodeId'])->name('renameEpisodeId');
+
+
     Route::get('/admin/users', [AdminController::class, 'editUser'])->name('adminEditUser');
     
     Route::post('/admin/anime', [AdminController::class, 'storeAnime'])->middleware('admin')->name('storeAnime');
