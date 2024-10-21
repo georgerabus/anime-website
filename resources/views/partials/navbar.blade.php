@@ -9,12 +9,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('anime-list') }}">Anime List</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('contact')}}">Contact</a>
                 </li>
+                @if(Auth::check() && Auth::user()->is_admin)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('anime-list') }}">Admin Page</a>
+                </li>
+                @endif
                 @if(!Auth::user())
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('register')}}">Register</a>
@@ -26,9 +29,7 @@
                 @if(Auth::user())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('user-profile') }}">
-                        
-                     
-                        
+                        Edit Profile
                         <img style="margin-inline:5px; width: 30px; height: 30px;" src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('default_photo.jpeg') }}" alt="pfp" class="rounded-circle">
                     </a>
                 </li>

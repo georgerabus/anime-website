@@ -37,11 +37,6 @@ class AnimeController extends Controller
     }
     
 
-    public function animeList()
-    {
-        return view('pages.anime-list');
-    }
-
     public function contact()
     {
         return view('pages.contact');

@@ -27,9 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/save-cropped-image', [UserController::class, 'saveCroppedImage']);
 });
 
+Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::get('/admin', [])->name('admin-page');
+});
+
 // Public routes
 Route::get('/', [AnimeController::class, 'index'])->name('home');
-Route::get('/anime-list', [AnimeController::class, 'animeList'])->name('anime-list');
 Route::get('/contact', [AnimeController::class, 'contact'])->name('contact');
 Route::get('/search', [AnimeController::class, 'search'])->name('search');
 Route::get('anime/{id}/episode/{episode_id?}', [AnimeController::class, 'animePage'])->name('animePage');

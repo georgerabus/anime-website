@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Anime List')
+@section('title', 'Admin Page')
 
 
 @section('content')
@@ -8,9 +8,8 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">
-                    <h4>Anime List</h4>
+                    <h4>Administration Page</h4>
                 </div>
-
             </div>
         </div>
     </div>
