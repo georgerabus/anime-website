@@ -29,7 +29,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('/admin', [AdminController::class, 'show'])->name('admin-page');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin-page');
+    Route::get('/admin/add', [AdminController::class, 'addNew'])->name('adminAddNew');
+    Route::get('/admin/list', [AdminController::class, 'list'])->name('adminList');
+    Route::get('/admin/users', [AdminController::class, 'editUser'])->name('adminEditUser');
+    
     Route::post('/admin/anime', [AdminController::class, 'storeAnime'])->middleware('admin')->name('storeAnime');
     Route::post('/admin/episode', [AdminController::class, 'storeEpisode'])->middleware('admin')->name('storeEpisode');
 });

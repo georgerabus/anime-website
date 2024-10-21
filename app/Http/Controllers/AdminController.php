@@ -2,17 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Anime;
 use App\Models\Episode;
 use Illuminate\Http\Request;
 
 class AdminController
 {
-    function show(){
-        $animes = Anime::all();
-        return view('pages.admin-page', compact('animes'));
+    function index(){
+        return view('pages.admin-page');
     }
 
+    function addNew(){
+        $animes = Anime::all();
+        return view('pages.admin-add-new', compact('animes'));
+    }
+    
+    function list(){
+        $animes = Anime::all();
+        return view('pages.admin-view-list', compact('animes'));
+    }
+
+    function editUser(){
+        $users = User::all();
+        return view('pages.admin-edit-users', compact('users'));
+    }
 
 public function storeAnime(Request $request)
 {
