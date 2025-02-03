@@ -1,12 +1,12 @@
-Anime Website project
+# Anime Website Project
 
-to install:
-git clone
-composer install
-create database
-modify .env file with the database config
-php artisan migrate
-php artisan key:generate
+## To Install:
+1. `git clone`
+2. `composer install`
+3. Create a database
+4. Modify `.env` file with the database configuration
+5. `php artisan migrate`
+6. `php artisan key:generate`
 
-run:
-php artisan migrate
+## To Run:
+1. `php artisan migrate`
